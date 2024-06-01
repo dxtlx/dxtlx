@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>  
+<html lang="en">  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>五子棋</title>  
+        <style>
+            body{
+                overflow: hidden;
+            }  
+            #board {
+                display: grid;  
+                grid-template-columns: repeat(15, 6.3vh);  
+                grid-template-rows: repeat(15, 6.3vh);
+            }  
+            .cell {  
+                border: 0.1vh solid black;  
+                background-color: rgba(212, 184, 145, 0.71);  
+                display: flex;  
+                justify-content: center;  
+                align-items: center;  
+                font-size: 20px;  
+                position: relative;  
+            }  
+            .cell.white::before{  
+                content: '';  
+                display: block;  
+                width: 60%;   
+                height: 60%;                
+                background-color: white;                  
+                border-radius: 50%; 
+                border: 0.1vh solid black; 
+                position: absolute; 
+                top: 50%; 
+                left: 50%; 
+                transform: translate(-50%, -50%);  
+            }  
+            .cell.black::before{  
+                content: '';  
+                display: block;  
+                width: 60%;   
+                height: 60%;                
+                background-color: black;                  
+                border-radius: 50%;  
+                position: absolute; 
+                top: 50%; 
+                left: 50%; 
+                transform: translate(-50%, -50%);  
+            } 
+            button {  
+                float: right;
+                font-size: 5vh;
+                margin-top:80vh;
+                margin-right: 10vh;
+            }  
+        </style>  
+    </head>  
+    <body>
+        <button onclick="replay()" class="x">重新开始</button>
+        <button onclick="re()" class="y">悔棋</button>
+        <div id="board"></div>
+
+        <script>  
+            var m;
+            var board = document.getElementById('board');  
+            let Player = 'black'; 
+            for (let i = 0; i < 225; i++) {  
+                const cell = document.createElement('div');  
+                cell.classList.add('cell');  
+                cell.onclick = function() { 
+                    if(this.classList.length==1) {
+                            this.classList.add(Player); 
+                            Player = Player=='black'?'white':'black'; 
+                        m=this; 
+                    }
+                };  
+                board.appendChild(cell);  
+            }
+            function replay(){
+                for(cell of board.children){
+                    cell.classList.remove('black','white');
+                }
+                Player='black';
+            }  
+            function re() {
+                if (m.classList.length>1){
+                    m.classList.remove('black', 'white');  
+                    Player=Player=='black'?'white':'black';
+                }
+            }
+        </script>  
+    </body>  
+</html>
